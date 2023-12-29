@@ -1,12 +1,15 @@
-import axios from 'axios'
-import dotenv from 'dotenv'
-dotenv.config()
+// axios.js
+import axios from 'axios';
+import dotenv from 'dotenv';
 
-const axiosInstance = axios.create({
-    baseURL: 'https://www.bling.com.br/Api/v3/',
-    headers: {
-        Authorization: 'bearer ' + process.env.API_TOKEN_ACCOUNT_1
-    }
-})
+dotenv.config();
 
-export default axiosInstance
+const axiosInstance = await axios.create({
+  baseURL: 'https://www.bling.com.br/Api/v3/',
+  headers: {
+    Authorization: 'Bearer ' + process.env.API_TOKEN_ACCOUNT_1,
+  },
+});
+
+export default axiosInstance;
+
