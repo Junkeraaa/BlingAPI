@@ -5,6 +5,3 @@ export async function teste() {
     console.log(response.data.data)
 }
 
-export async function abc() {
-    console.log('teste')
-}
