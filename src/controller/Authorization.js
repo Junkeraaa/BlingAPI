@@ -11,7 +11,7 @@ export async function getAuthorizationCode(code) {
     try {
         const response = await axiosInstanceCode.post(`oauth/token`, formEncodedData);
         console.log(response.data);
-        return(response.data.acess_toke)
+        return(response.data.acess_token)
         // Faça algo com a resposta aqui
     } catch (error) {
         console.error("Erro na solicitação:", error.data);
