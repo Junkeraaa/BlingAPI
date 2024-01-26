@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Console Log Output</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        #output {
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        input[type="number"] {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 8px 16px;
+            border-radius: 5px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="output"></div>
+    <input type="number" id="inputNumber" placeholder="Insira um número">
+    <button id="fetchButton">Enviar</button>
+    <button onclick="window.location.href = 'https://www.bling.com.br/b/Api/v3/oauth/authorize?response_type=code&client_id=5f18d563cf344fcf103f29f5bab255902bd8632a&state=40f114d68503f6397c4f07b6cc28aeba'">CONTA 01</button>
+
+    <script>
+        // Função para adicionar texto ao elemento div
+        function addToOutput(text) {
+            document.getElementById('output').innerHTML += `<p>${text}</p>`;
+        }
+
+        // Função para fazer a requisição ao endpoint "/authorization01"
+        async function fetchData() {
+            try {
+                const response = await fetch('/authorization01');
+                const data = await response.json();
+                
+                // Imprime as informações obtidas na tela
+                addToOutput(`TESTE - AUTHORIZATION CODE: ${data.authorizationCode}`);
+                addToOutput(`TESTE - SALE: ${data.sale}`);
+                addToOutput(`TESTE - ORDERS ID: ${data.ordersID}`);
+                addToOutput(`TESTE - GET PEDIDO: ${data.orderTest}`);
+                addToOutput(`TESTE - PEDIDO ADICIONADO: ${data.teste}`);
+            } catch (error) {
+                console.error('Ocorreu um erro ao fazer a requisição:', error);
+            }
+        }
+
+        // Chama a função fetchData quando o DOM é completamente carregado
+        document.addEventListener('DOMContentLoaded', fetchData);
+
+        // Adiciona um evento de clique ao botão de enviar
+        document.getElementById('fetchButton').addEventListener('click', async () => {
+            const inputValue = document.getElementById('inputNumber').value;
+            addToOutput(`Número inserido: ${inputValue}`);
+        });
+    </script>
+</body>
+</html>
