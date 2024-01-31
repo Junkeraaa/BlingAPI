@@ -1,8 +1,8 @@
 import querystring from 'querystring';
 import 'dotenv'
-import axios from 'axios';
+import axiosInstanceCode from './axios.js';
 
-export async function getAuthorizationCode(code, systemId) {
+export async function getAuthorizationCode(systemCode, systemId) {
     console.log("get authorization code...");
     let basicToken;
     
@@ -20,16 +20,26 @@ export async function getAuthorizationCode(code, systemId) {
             basicToken = bufferData.toString('base64');
             break;
         }
+
+        case 'SYSC': {
+            let data = `${process.env.CLIENT_SYSTEM_C}:${process.env.SECRET_SYSTEM_C}`      
+            let bufferData = new Buffer.from(data);
+            basicToken = bufferData.toString('base64');
+            break;
+        }
     }
     
+    console.log(`basic token = ${basicToken}`);
 
     const formData = {
         grant_type: 'authorization_code',
-        code: code
+        code: systemCode
     }
+
     const formEncodedData = querystring.stringify(formData);
+    
     try {
-        const response = await axios.post(`${process.env.API_URL}oauth/token`, formEncodedData, {
+        const response = await axiosInstanceCode.post(`oauth/token`, formEncodedData, {
             headers: {
                 'Authorization': `Basic ${basicToken}`,
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -41,7 +51,7 @@ export async function getAuthorizationCode(code, systemId) {
         return(code)
         // Faça algo com a resposta aqui
     } catch (error) {
-        console.error("Erro na solicitação:", error.message);
+        console.log(error.response.data.error);
         // Trate o erro aqui, se necessário
     }
 }

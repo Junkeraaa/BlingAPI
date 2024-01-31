@@ -1,6 +1,6 @@
 import axiosInstanceCode from './axios.js';
 
-export async function getSalesOrder(authorizationCode) {
+export async function getAllSalesOrder(authorizationCode) {
     console.log("Recebendo pedido de venda!");
     try {
         const response = await axiosInstanceCode.get(
@@ -36,7 +36,7 @@ export function filterOrdersByOrderNumber(orderNumbers, allOrders){
 
 }
 
-export async function getSaleOrder(authorizationCode, orderNumber) {
+export async function getSpecificSaleOrder(authorizationCode, orderNumber) {
     console.log("Recebendo pedido de venda solicitado!");
     try {
         const response = await axiosInstanceCode.get(
@@ -55,4 +55,9 @@ export async function getSaleOrder(authorizationCode, orderNumber) {
         console.error("Erro na solicitação:", error);
         // Trate o erro aqui, se necessário
     }
+}
+
+export async function getLastNumberOrder(authorizationCode) {
+    const sale = await getAllSalesOrder(authorizationCode);
+    return sale[0].numero
 }
