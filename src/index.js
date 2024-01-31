@@ -42,7 +42,7 @@ server.get("/authorization01", async (req, res) => {
     } else { 
         console.log(numberToFilterOrder+'======================')
         console.log(`Número para filtrar pedidos: ${numberToFilterOrder}`);
-        const authorizationCode = await getAuthorizationCode(code);
+        const authorizationCode = await getAuthorizationCode(code, system);
         res.writeHead(301, {
             Location: `http://localhost:3000/q?system=${system}&token=${authorizationCode}`
           }).end();
