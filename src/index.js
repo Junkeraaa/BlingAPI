@@ -4,6 +4,7 @@ import cors from 'cors';
 import { fileURLToPath } from 'url'; // Importa a função fileURLToPath para converter a URL do módulo em um caminho de arquivo
 import path from 'path'; // Importe o módulo 'path'
 import { getAuthorizationCode } from './controller/Authorization.js';
+// Will use later
 import { getSalesOrder, filterOrdersByOrderNumber, getSaleOrder } from './controller/getSalesOrder.js';
 import { AddSaleOrder } from './controller/AddOrder.js';
 
@@ -35,24 +36,18 @@ server.post("/setNumberToFilterOrder", (req, res) => {
 });
 
 server.get("/authorization01", async (req, res) => { 
-    const { code } = req.query;
+    const { code, system } = req.query;
     if (!code) {
         return res.status(400).json({ error: "Authorization code is required." });
     } else { 
-        // Utilize a variável numberToFilterOrder onde for necessário no restante do código
         console.log(numberToFilterOrder+'======================')
         console.log(`Número para filtrar pedidos: ${numberToFilterOrder}`);
         const authorizationCode = await getAuthorizationCode(code);
-        console.log(`TESTE - AUTHORIZATION CODE: ${authorizationCode}`)
-        const sale = await getSalesOrder(authorizationCode);
-        console.log(`TESTE - SALE: ${sale}`);
-        const ordersId = filterOrdersByOrderNumber([1907, 1908, 1911], sale)
-        console.log(`TESTE - ORDERS ID: ${ordersId}`);
-        const orderTest = await getSaleOrder(authorizationCode, ordersId[0])
-        console.log(`TESTE - GET PEDIDO: ${orderTest}`)
-        const teste = await AddSaleOrder(authorizationCode, orderTest, 2008)
-        console.log(`TESTE - PEDIDO ADICIONADO: ${teste}`)
+        res.writeHead(301, {
+            Location: `http://localhost:3000/q?system=${system}&token=${authorizationCode}`
+          }).end();
     }
+    res.send();
 });
 
 server.listen(process.env.PORT, () => {
