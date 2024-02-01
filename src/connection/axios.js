@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const axiosInstanceCode = axios.create({
-    baseURL: process.env.BASE_URL,
+    baseURL: "https://www.bling.com.br/Api/v3/",
 })
 
 export default axiosInstanceCode
