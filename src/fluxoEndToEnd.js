@@ -6,6 +6,10 @@ import { getAllSalespersons, getSalespersonId, getSpecificSellerName } from './s
 import { AddSaleOrder } from './services/order/AddOrderService.js'
 
 export async function fluxoEndToEnd(authorizationIdSYS1, authorizationIdSYS2, numberSaleOrders){
+
+    let sucessOrderNumbers = [] // array com os pedidos que foram executados com sucesso.
+
+    let errorOrderNumbers = [] // array com os pedidos que foram executados com erro.
     
     const allSalesOrder = await getAllSalesOrder(authorizationIdSYS1); // Recebendo todos os pedidos de venda da conta 01
     
@@ -16,8 +20,6 @@ export async function fluxoEndToEnd(authorizationIdSYS1, authorizationIdSYS2, nu
     const allProducts = await getAllProducts(authorizationIdSYS2); // Recebendo todos os produtos da conta 02
     
     let lastNumberOrderSale = await getLastNumberOrder(authorizationIdSYS2); // Pegando o numero do último pedido da conta 02
-
-    console.log(`Ultimo numero: ${lastNumberOrderSale}`)
     
     const filteredSalesOrderId = filterOrdersByOrderNumber(numberSaleOrders, allSalesOrder) // Filtrando os pedidos de venda pelos que o usuario indicar
     
@@ -39,16 +41,19 @@ export async function fluxoEndToEnd(authorizationIdSYS1, authorizationIdSYS2, nu
     
         }
         
-        lastNumberOrderSale += 2;
-
-        console.log("ultimo numero do pedido que sera adicionado"+lastNumberOrderSale);
+        lastNumberOrderSale += 1;
 
         console.log(`Pedido ${interactive+1}`)
 
-        //console.log(saleOrder)
+        const responseAddSaleOrder = await AddSaleOrder(authorizationIdSYS2, saleOrder, lastNumberOrderSale); // Adicionando o pedido a conta 02
 
-        const teste = await AddSaleOrder(authorizationIdSYS2, saleOrder, lastNumberOrderSale); // Adicionando o pedido a conta 02
-
-        // console.log(teste)
+        if(typeof responseAddSaleOrder === 'number'){
+            sucessOrderNumbers.push(responseAddSaleOrder)
+        } else {
+            errorOrderNumbers.push(responseAddSaleOrder)
+        }
     }
+        console.log(`notas adicionadas com sucesso: `)
+        console.log(sucessOrderNumbers)
+        return sucessOrderNumbers;
 }

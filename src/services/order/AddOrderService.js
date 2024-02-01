@@ -3,7 +3,6 @@ import axiosInstanceCode from '../../connection/axios.js';
 export async function AddSaleOrder(authorizationCode, orderToAdd, newNumberOrder) {
     console.log("Adicionando pedido de venda!");
     orderToAdd.numero = newNumberOrder;
-    console.log(orderToAdd)
     
     try {
         const response = await axiosInstanceCode.post(
@@ -17,10 +16,12 @@ export async function AddSaleOrder(authorizationCode, orderToAdd, newNumberOrder
         );
 
         console.log(`Pedido cadastrado com sucesso`);
-        return response.data.data;
+        console.log(response.data.data.id)
+        return response.data.data.id;
         // Faça algo com a resposta aqui
     } catch (error) {
         console.error("Erro na solicitação:", error.response.data.error.fields[0]);
+        
         // Trate o erro aqui, se necessário
     }
 }
