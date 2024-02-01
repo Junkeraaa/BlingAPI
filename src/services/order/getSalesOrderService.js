@@ -71,6 +71,16 @@ export async function getSpecificSaleOrder(authorizationCode, orderNumber) {
 }
 
 export async function getLastNumberOrder(authorizationCode) {
-    const sale = await getAllSalesOrder(authorizationCode);
-    return sale[0].numero
+
+    const allSalesOrder = await getAllSalesOrder(authorizationCode);
+    
+    let lastNumberOrder = allSalesOrder[0].numero;
+
+    for (let i = 1; i < allSalesOrder.length; i++) {
+        if (allSalesOrder[i].numero > lastNumberOrder) {
+            lastNumberOrder = allSalesOrder[i].numero;
+        }
+    }
+
+    return lastNumberOrder;
 }

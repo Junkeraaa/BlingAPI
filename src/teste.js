@@ -1,7 +1,7 @@
 import { getAuthorizationCode } from './services/auth/authorizationService.js';
 import { getAllContacts, getContactId } from './services/contacts/contactService.js';
 import { getAllProducts, getProductId } from './services/product/productService.js';
-import { getAllSalesOrder } from './services/order/getSalesOrderService.js';
+import { getAllSalesOrder, getLastNumberOrder } from './services/order/getSalesOrderService.js';
 import { getSalespersonId, getSpecificSellerName } from './services/seller/sellerService.js'
 import { fluxoEndToEnd } from './fluxoEndToEnd.js'
 // import { filterOrdersByOrderNumber, getAllSalesOrder, getSpecificSaleOrder, getLastNumberOrder } from './controller/getSalesOrder.js';
@@ -17,12 +17,13 @@ import { fluxoEndToEnd } from './fluxoEndToEnd.js'
         // console.log(allContacts.length)
         // await getContactId(authorizationCodeUniversal, "MARCELO FEHER PESTANA")
         // console.log(`TESTE - AUTHORIZATION CODE: ${authorizationCode}`)
-        // const authorizationCode1 = "b5365b1acd8c0529769b92c0421795ded7230a3d";
-        // const authorizationCode2 ="ac3bb5174a2ce1b41b02701cab63cf5b1dff559f";
+       
         // const teste = await getLastNumberOrder(authorizationCode2);
         // await getAllProducts(authorizationCodeUniversal);
         // await getProductId(authorizationCodeUniversal, "BARRA ROSCADA GALV ELET 1/4X3MT")
         // const sale = await getAllSalesOrder(authorizationCodeUniversal);
+        // const biggestNumber = getLastNumberOrder(sale)
+        // console.log(`maior numero de pedido: ${biggestNumber}`)
         // console.log(`TESTE - SALE: ${sale}`);
         // const ordersId = filterOrdersByOrderNumber([2001, 2002, 2003], sale)
         // console.log(`TESTE - ORDERS ID: ${ordersId}`);
