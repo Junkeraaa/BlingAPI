@@ -27,7 +27,7 @@ export async function getAllContacts(authorizationCode) {
 
         return allContacts;
     } catch (error) {
-        console.error("Erro na solicitação:", error.response.data.error.fields[0]);
+        console.error("Erro na solicitação:", error.response.data.error);
         return [];
     }
 }
@@ -35,23 +35,23 @@ export async function getAllContacts(authorizationCode) {
 
 
 
-export async function getContactId(authorizationCode, clientName) {
-    console.log("Acessando id do cliente!");
+export async function getContactId(clientName, allContacts) {
+    // console.log("Acessando id do cliente!");
 
     try {
-        const allContacts = await getAllContacts(authorizationCode);
+        // const allContacts = await getAllContacts(authorizationCode);
         let contactId = 0;
 
         for (let i = 0; i < allContacts.length; i++) {
             const contact = allContacts[i];
-            if (contact.nome === clientName) {
+            if (contact.nome.toLowerCase() === clientName.toLowerCase()) {
                 contactId = contact.id;
                 break;
             }
         }
 
-        console.log(`Total de contatos: ${allContacts.length}`);
-        console.log(`ID do contato: ${contactId}`);
+       // console.log(`Total de contatos: ${allContacts.length}`);
+       // console.log(`ID do contato: ${contactId}`);
         return contactId;
     } catch (error) {
         console.error("Erro na solicitação:", error.response.data.error.fields[0]);

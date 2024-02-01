@@ -1,4 +1,5 @@
 import axiosInstanceCode from '../../connection/axios.js';
+import removerAcentos from '../common/functions.js';
 
 export async function getAllProducts(authorizationCode) {
     let allProducts = [];
@@ -36,23 +37,22 @@ export async function getAllProducts(authorizationCode) {
 
 
 
-export async function getProductId(authorizationCode, productName) {
-    console.log("Acessando id do produto!");
+export async function getProductId(allProducts, productName) {
+    // console.log("Acessando id do produto!");
 
     try {
-        const allProducts = await getAllProducts(authorizationCode);
+        // const allProducts = await getAllProducts(authorizationCode);
         let productId = 0;
 
         for (let i = 0; i < allProducts.length; i++) {
             const product = allProducts[i];
-            if (product.nome === productName) {
+            if (removerAcentos(product.nome.toLowerCase()) === removerAcentos(productName.toLowerCase())) {
                 productId = product.id;
                 break;
             }
         }
 
-        console.log(`Total de produtos: ${allProducts.length}`);
-        console.log(`ID do contato: ${productId}`);
+        //console.log(`Total de produtos: ${allProducts.length}`);
         return productId;
     } catch (error) {
         console.error("Erro na solicitação:", error.response.data.error.fields[0]);

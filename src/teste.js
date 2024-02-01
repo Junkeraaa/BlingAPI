@@ -2,15 +2,20 @@ import { getAuthorizationCode } from './services/auth/authorizationService.js';
 import { getAllContacts, getContactId } from './services/contacts/contactService.js';
 import { getAllProducts, getProductId } from './services/product/productService.js';
 import { getAllSalesOrder } from './services/order/getSalesOrderService.js';
-import { getAllSalespersons, getSalespersonId, getSpecificSellerName } from './services/seller/sellerService.js'
+import { getSalespersonId, getSpecificSellerName } from './services/seller/sellerService.js'
+import { fluxoEndToEnd } from './fluxoEndToEnd.js'
 // import { filterOrdersByOrderNumber, getAllSalesOrder, getSpecificSaleOrder, getLastNumberOrder } from './controller/getSalesOrder.js';
 // import { AddSaleOrder } from './controller/AddOrder.js';
-        
+
+        const authorizationCodeUniversal = "db459df19f0a99f3d58716b1f687ac0a804473df"
+        const code = "95983fdf46efd0325fe92980e5eb30735f2dcdc8";
         console.log(`Code: ${code}`)
+        const numerosPedidos = [2014, 2013, 2011, 2054, 2055];
+         await fluxoEndToEnd("2946a7e3a5349fec846d8c0ea910b75f57945fbc", "8c0618bdd93f39a3d37acc5463076bb24010d439", numerosPedidos)
         // await getSalespersonId(authorizationCodeUniversal, "MIGUEL")
         // await getSpecificSellerName(authorizationCodeUniversal, "15596220514")
         // await getAllSalespersons(authorizationCodeUniversal);
-        // const authorizationCode = await getAuthorizationCode(code, "SYSA");
+        // const authorizationCode = await getAuthorizationCode(code, "SYSB");
         // console.log(authorizationCode)
         // const allContacts = await getAllContacts(authorizationCodeUniversal)
         // console.log(allContacts.length)

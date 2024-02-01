@@ -24,7 +24,7 @@ export async function getAllSalespersons(authorizationCode) {
             allSalespersons = allSalespersons.concat(response.data.data);
             pageNumber++;
         }
-        console.log(allSalespersons)
+        // console.log(allSalespersons)
         return allSalespersons;
     } catch (error) {
         console.error("Erro na solicitação:", error.response.data.error.fields[0]);
@@ -32,26 +32,26 @@ export async function getAllSalespersons(authorizationCode) {
     }
 }
 
-export async function getSalespersonId(authorizationCode, salespersonName) {
-    console.log("Acessando id do vendedor!");
+export async function getSalespersonId(allSalespersons, salespersonName) {
+    // console.log("Acessando id do vendedor!");
 
     try {
-        const allSalespersons = await getAllSalespersons(authorizationCode);
+        // const allSalespersons = await getAllSalespersons(authorizationCode);
         let salespersonId = 0;
 
         for (let i = 0; i < allSalespersons.length; i++) {
             const salesperson = allSalespersons[i];
-            if (salesperson.contato.nome === salespersonName) {
+            if ((salesperson.contato.nome).toLowerCase() === (salespersonName).toLowerCase()) {
                 salespersonId = salesperson.id;
                 break;
             }
         }
 
-        console.log(`Total de vendedores: ${allSalespersons.length}`);
-        console.log(`ID do vendedor: ${salespersonId}`);
+        //console.log(`Total de vendedores: ${allSalespersons.length}`);
+        //console.log(`ID do vendedor: ${salespersonId}`);
         return salespersonId;
     } catch (error) {
-        console.error("Erro na solicitação:", error.response.data.error.fields[0]);
+        console.error("Erro na solicitação:", error);
         return null;
     }
 }
@@ -68,8 +68,8 @@ export async function getSpecificSellerName(authorizationCode, sellerId) {
             }
         );
 
-        console.log(response.data.data.contato.nome);
-        return response;
+       // console.log(response.data.data.contato.nome);
+        return response.data.data.contato.nome;
         // Faça algo com a resposta aqui
     } catch (error) {
         console.error("Erro na solicitação:", error);

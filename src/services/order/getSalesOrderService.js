@@ -61,7 +61,7 @@ export async function getSpecificSaleOrder(authorizationCode, orderNumber) {
             }
         );
 
-        console.log(`Nota recebida: ${response}`);
+        // console.log(`Nota recebida: ${response.data.data}`);
         return response.data.data;
         // Faça algo com a resposta aqui
     } catch (error) {
