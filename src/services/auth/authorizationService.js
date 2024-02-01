@@ -8,27 +8,27 @@ export async function getAuthorizationCode(systemCode, systemId) {
 
     switch (systemId) {
         case 'SYSA': {
-            let data = `${process.env.CLIENT_SYSTEM_A}:${process.env.SECRET_SYSTEM_A}`
-            let bufferData = new Buffer(data);
+            const data = `${process.env.CLIENT_SYSTEM_A}:${process.env.SECRET_SYSTEM_A}`;
+            const bufferData = Buffer.from(data);
             basicToken = bufferData.toString('base64');
             break;
         }
 
         case 'SYSB': {
-            let data = `${process.env.CLIENT_SYSTEM_B}:${process.env.SECRET_SYSTEM_B}`
-            let bufferData = new Buffer.from(data);
+            const data = `${process.env.CLIENT_SYSTEM_B}:${process.env.SECRET_SYSTEM_B}`;
+            const bufferData = Buffer.from(data);
             basicToken = bufferData.toString('base64');
             break;
         }
 
         case 'SYSC': {
-            let data = `${process.env.CLIENT_SYSTEM_C}:${process.env.SECRET_SYSTEM_C}`
-            let bufferData = new Buffer.from(data);
+            const data = `${process.env.CLIENT_SYSTEM_C}:${process.env.SECRET_SYSTEM_C}`;
+            const bufferData = Buffer.from(data);
             basicToken = bufferData.toString('base64');
             break;
         }
     }
-
+    
     const formData = {
         grant_type: 'authorization_code',
         code: systemCode

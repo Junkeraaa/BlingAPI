@@ -1,4 +1,4 @@
-import axiosInstanceCode from './axios.js';
+import axiosInstanceCode from '../../connection/axios.js';
 
 export async function AddSaleOrder(authorizationCode, orderToAdd, newNumberOrder) {
     console.log("Adicionando pedido de venda!");

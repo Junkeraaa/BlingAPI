@@ -1,25 +1,38 @@
-import axiosInstanceCode from './axios.js';
+import axiosInstanceCode from '../../connection/axios.js';
 
 export async function getAllSalesOrder(authorizationCode) {
-    console.log("Recebendo pedido de venda!");
+    let allSalesOrders = [];
+    let pageNumber = 1;
+
     try {
-        const response = await axiosInstanceCode.get(
-            `pedidos/vendas`,
-            {
+        while (true) {
+            const response = await axiosInstanceCode.get('pedidos/vendas', {
+                params: {
+                    pagina: pageNumber,
+                    limite: 100
+                },
                 headers: {
                     'Authorization': `Bearer ${authorizationCode}`
                 }
-            }
-        );
+            });
 
-        console.log(`${response.data.data.length} Notas recebidas`);
-        return response.data.data;
-        // Faça algo com a resposta aqui
+            if (response.data.data.length === 0) {
+        
+                break;
+            }
+
+            allSalesOrders = allSalesOrders.concat(response.data.data);
+            pageNumber++;
+        }
+
+        console.log(`${allSalesOrders.length} Notas recebidas`);
+        return allSalesOrders;
     } catch (error) {
         console.error("Erro na solicitação:", error);
-        // Trate o erro aqui, se necessário
+        return [];
     }
 }
+
 
 export function filterOrdersByOrderNumber(orderNumbers, allOrders){
     const requestsAlreadyFiltered = [];
