@@ -5,7 +5,7 @@ import { getAllSalesOrder, filterOrdersByOrderNumber, getSpecificSaleOrder, getL
 import { getAllSalespersons, getSalespersonId, getSpecificSellerName } from './services/seller/sellerService.js'
 import { AddSaleOrder } from './services/order/AddOrderService.js'
 
-export async function fluxoEndToEnd(authorizationIdSYS1, authorizationIdSYS2, numberSaleOrders){
+export default async function fluxoEndToEnd(authorizationIdSYS1, authorizationIdSYS2, numberSaleOrders){
 
     let sucessOrderNumbers = [] // array com os pedidos que foram executados com sucesso.
 

@@ -29,7 +29,7 @@ export async function getAllSalesOrder(authorizationCode) {
         return allSalesOrders;
     } catch (error) {
         console.error("Erro na solicitação:", error);
-        return [];
+        throw new Error(err.message);
     }
 }
 
