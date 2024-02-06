@@ -15,7 +15,7 @@ server.get("/authorization", async (req, res) => {
             
             const authorizationCode = await getAuthorizationCode(code, system);
             res.writeHead(301, {
-                Location: `https://amplacon-back-9dad8941d2b5.herokuapp.com/q?system=${system}&token=${authorizationCode}`
+                Location: `https://magical-conkies-ff2647.netlify.app/q?system=${system}&token=${authorizationCode}`
               }).end();
         }
         res.send();
