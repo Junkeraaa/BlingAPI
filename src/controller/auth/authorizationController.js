@@ -10,7 +10,7 @@ server.get("/authorization", async (req, res) => {
         const { code, system } = req.query;
         
         if (!code) {
-            return res.status(400).json({ error: "Authorization code is required." });
+            return res.status(400).json({ error: "Authorization code is required. Teste Luis" });
         } else { 
             
             const authorizationCode = await getAuthorizationCode(code, system);
