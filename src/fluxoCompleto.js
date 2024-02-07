@@ -7,9 +7,9 @@ import { AddSaleOrder } from './services/order/AddOrderService.js'
 
 
  async function fluxoCompleto(authorizationIdSYS1, authorizationIdSYS2, numberSaleOrders){
-    let lastNumberOrder = await getLastNumberOrder(authorizationIdSYS2)
-    console.log("ultimo numero adicionado: " + lastNumberOrder)
-    for(let i = 0; i < numberSaleOrders.length; i++) {
+    
+        let lastNumberOrder = await getLastNumberOrder(authorizationIdSYS2)
+        console.log("ultimo numero adicionado: " + lastNumberOrder)
         const idOrder = await getIdOfSpecificSaleOrderByOrderNumber(authorizationIdSYS1, numberSaleOrders[i])
         const orderSale = await getSpecificSaleOrderById(authorizationIdSYS1, idOrder)
         orderSale.contato.id = await getContactId(authorizationIdSYS2, orderSale.contato.nome)
@@ -29,7 +29,7 @@ import { AddSaleOrder } from './services/order/AddOrderService.js'
 
         const responseAddSaleOrder = await AddSaleOrder(authorizationIdSYS2, orderSale, lastNumberOrder); // Adicionando o pedido a conta 02
 
-    }
+    
     console.log("sucesso")
 }
 
