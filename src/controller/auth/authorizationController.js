@@ -4,9 +4,9 @@ import { getAuthorizationCode } from "../../services/auth/authorizationService.j
 
 const server = Router();
 
-server.get("/teste"){
-    return res.send("Oi");
-}
+server.get("/teste",(req, res) => {
+    res.send("Oi");
+})
 
 
 server.get("/authorization", async (req, res) => { 
