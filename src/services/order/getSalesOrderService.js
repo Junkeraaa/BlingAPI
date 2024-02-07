@@ -1,5 +1,38 @@
 import axiosInstanceCode from '../../connection/axios.js';
 
+ async function getAllSalesOrder(authorizationCode) {
+    let allSalesOrders = [];
+    let pageNumber = 1;
+
+    try {
+        while (true) {
+            const response = await axiosInstanceCode.get('pedidos/vendas', {
+                params: {
+                    pagina: pageNumber,
+                    limite: 100
+                },
+                headers: {
+                    'Authorization': `Bearer ${authorizationCode}`
+                }
+            });
+
+            if (response.data.data.length === 0) {
+
+                break;
+            }
+
+            allSalesOrders = allSalesOrders.concat(response.data.data);
+            pageNumber++;
+        }
+
+        console.log(`${allSalesOrders.length} Notas recebidas`);
+        return allSalesOrders;
+    } catch (error) {
+        console.error("Erro na solicitação:", error);
+        throw new Error(err.message);
+    }
+}
+
 export async function getSpecificSaleOrderById(authorizationCode, id) {
     try {
         const response = await axiosInstanceCode.get(
