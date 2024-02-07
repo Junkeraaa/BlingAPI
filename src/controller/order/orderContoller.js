@@ -14,13 +14,9 @@ server.post("/sendOrderSale", async (req, res, next) => {
         } else { 
             
             const responseObject = await fluxoCompleto(authorizationCodeSYS01, authorizationCodeSYS02, numberSaleOrders);
-            if(responseObject.Erro){
-                throw new Error (responseObject.Erro)
-            } else {
             res.send({
                 data: responseObject
             });
-            }
         }
     }catch(err) {
         console.log("Didng work dude");
