@@ -12,7 +12,10 @@ server.get("/teste",(req, res) => {
 server.get("/authorization", async (req, res) => { 
     try {
         const { code, system } = req.query;
-        
+        res.send(process.env.CLIENT_SYSTEM_A);
+        res.send(process.env.SECRET_SYSTEM_A);
+        res.send(code);
+        res.send(system);
         if (!code) {
             return res.status(400).json({ error: "Authorization code is required. Teste Luis" });
         } else { 
