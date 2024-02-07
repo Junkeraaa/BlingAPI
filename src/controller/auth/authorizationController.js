@@ -14,7 +14,7 @@ server.get("/authorization", async (req, res) => {
             
             const authorizationCode = await getAuthorizationCode(code, system);
             res.writeHead(301, {
-                Location: `https://65c2f17910bee7246345ebcd--stirring-kleicha-50756e.netlify.app/q?system=${system}&token=${authorizationCode}`
+                Location: `https://65c394b21b303f3a3756788b--comforting-faloodeh-eed059.netlify.app/q?system=${system}&token=${authorizationCode}`
               }).end();
         }
         res.send();
