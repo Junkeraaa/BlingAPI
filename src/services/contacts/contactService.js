@@ -12,10 +12,17 @@ export async function getContactId(authorizationCode, clientName) {
                 'Authorization': `Bearer ${authorizationCode}`
             }
         });
-        contactId = response.data.data[0].id
+        
+        if (response.data.data.length > 0) {
+            contactId = response.data.data[0].id;
+        } else {
+            contactId = 0;
+        }
+        
         return contactId;
     } catch (error) {
         console.error("Erro na solicitação:", error);
         return null;
     }
 }
+

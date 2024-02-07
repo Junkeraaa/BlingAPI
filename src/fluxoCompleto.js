@@ -8,13 +8,36 @@ import { AddSaleOrder } from './services/order/AddOrderService.js'
 
  async function fluxoCompleto(authorizationIdSYS1, authorizationIdSYS2, numberSaleOrder){
 
-        let lastNumberOrder = await getLastNumberOrder(authorizationIdSYS2)
-        const idOrder = await getIdOfSpecificSaleOrderByOrderNumber(authorizationIdSYS1, numberSaleOrder)
-        const orderSale = await getSpecificSaleOrderById(authorizationIdSYS1, idOrder)
+        console.log("iniciando fluxo completo")
+
+        let responseObject = {}
+        responseObject.numeroAntigoDoPedido = numberSaleOrder; // passando no objeto o numero antigo do pedido.
+        let lastNumberOrder = await getLastNumberOrder(authorizationIdSYS2) // Recebendo o numero do ultimo pedido adicionado no sistema destinatário.
+
+        try {
+        
+        const idOrder = await getIdOfSpecificSaleOrderByOrderNumber(authorizationIdSYS1, numberSaleOrder) // Recebendo o id do pedido informado.
+        
+        if(idOrder === 0){
+            throw new Error("O número de pedido informado não existe");
+        }
+
+        const orderSale = await getSpecificSaleOrderById(authorizationIdSYS1, idOrder) // Usando o Id para pegar o JSON completo do pedido informado.
+
         orderSale.contato.id = await getContactId(authorizationIdSYS2, orderSale.contato.nome)
-        const sellerName = await getSpecificSellerName(authorizationIdSYS1, orderSale.vendedor.id)
+
+        if(orderSale.contato.id === 0) {
+            throw new Error("Existem desavenças nos dados do cliente.");
+        }
+
+        const sellerName = await getSpecificSellerName(authorizationIdSYS1, orderSale.vendedor.id) // Recebendo o nome do cliente pelo sistema 01.
+
         orderSale.vendedor.id = await getSelledIdByName(authorizationIdSYS2, sellerName)
         
+        if(orderSale.vendedor.id === 0) {
+            throw new Error("Existem desavenças nos dados do vendedor.");
+        }
+
         for (let interactive2 = 0; interactive2 < orderSale.itens.length; interactive2++) { // For iterando sobre todos os produtos do pedido de venda
     
                        let produto = orderSale.itens[interactive2]; // Recebendo os dados do produto da vez
@@ -26,8 +49,15 @@ import { AddSaleOrder } from './services/order/AddOrderService.js'
 
         lastNumberOrder += 1;
 
-        const responseAddSaleOrder = await AddSaleOrder(authorizationIdSYS2, orderSale, lastNumberOrder); // Adicionando o pedido a conta 02
+        responseObject.numeroNovoDoPedido = lastNumberOrder; // Adicionando no objeto resposta o novo número do pedido.
 
+        const responseAddSaleOrder = await AddSaleOrder(authorizationIdSYS2, orderSale, lastNumberOrder); // Adicionando o pedido a conta 02
+    } catch (error){
+
+        responseObject.Erro = error.message
+
+    }
+        return responseObject
 }
 
 export default fluxoCompleto

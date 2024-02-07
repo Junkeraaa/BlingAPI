@@ -2,20 +2,24 @@ import { all } from 'axios';
 import axiosInstanceCode from '../../connection/axios.js';
 
 export async function getSelledIdByName(authorizationCode, sellerName) {
-
     try {
-    
-            const response = await axiosInstanceCode.get(`vendedores?nomeContato=${sellerName}`, {
-                headers: {
-                    'Authorization': `Bearer ${authorizationCode}`
-                }
-            });
-        return response.data.data[0].id;
+        const response = await axiosInstanceCode.get(`vendedores?nomeContato=${sellerName}`, {
+            headers: {
+                'Authorization': `Bearer ${authorizationCode}`
+            }
+        });
+
+        if (response.data.data.length > 0) {
+            return response.data.data[0].id;
+        } else {
+            return 0;
+        }
     } catch (error) {
         console.error("Erro na solicitação:", error);
-        return [];
+        return null;
     }
 }
+
 
 export async function getSalespersonId(allSalespersons, salespersonName) {
     // console.log("Acessando id do vendedor!");

@@ -65,13 +65,19 @@ export async function getIdOfSpecificSaleOrderByOrderNumber(authorizationCode, o
             }
         );
 
-        return response.data.data[0].id;
+        if (response.data.data && response.data.data.length > 0 && response.data.data[0].id) {
+            return response.data.data[0].id;
+        } else {
+            return 0;
+        }
         // Faça algo com a resposta aqui
     } catch (error) {
         console.error("Erro na solicitação:", error);
         // Trate o erro aqui, se necessário
     }
 }
+
+
 
 export async function getLastNumberOrder(authorizationCode) {
 
