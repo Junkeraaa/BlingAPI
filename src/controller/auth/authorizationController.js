@@ -5,7 +5,7 @@ import { getAuthorizationCode } from "../../services/auth/authorizationService.j
 const server = Router();
 
 server.get("/teste",(req, res) => {
-    res.send("Oi");
+    res.send(process.env.CLIENT_SYSTEM_A);
 })
 
 
