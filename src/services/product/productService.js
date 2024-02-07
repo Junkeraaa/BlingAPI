@@ -37,7 +37,7 @@ export async function getAllProducts(authorizationCode) {
 
 
 
-export async function getProductId(allProducts, productName) {
+export async function getProductId(authorizationCode, productName) {
     // console.log("Acessando id do produto!");
 
     try {
