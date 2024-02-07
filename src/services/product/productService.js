@@ -1,61 +1,24 @@
 import axiosInstanceCode from '../../connection/axios.js';
 import removerAcentos from '../common/functions.js';
 
-export async function getAllProducts(authorizationCode) {
-    let allProducts = [];
-    let pageNumber = 1;
-
-    try {
-        while (true) {
-            const response = await axiosInstanceCode.get('produtos', {
-                params: {
-                    pagina: pageNumber,
-                    limite: 100
-                },
-                headers: {
-                    'Authorization': `Bearer ${authorizationCode}`
-                }
-            });
-
-            if (response.data.data.length === 0) {
-                
-                break;
-            }
-
-            allProducts = allProducts.concat(response.data.data);
-            pageNumber++;
-        }
-
-        return allProducts;
-
-    } catch (error) {
-        console.error("Erro na solicitação:", error.response.data.error.fields[0]);
-        return [];
-    }
-}
-
-
-
-
-export async function getProductId(allProducts, productName) {
+export async function getProductIdByName(productName) {
     // console.log("Acessando id do produto!");
 
     try {
-        // const allProducts = await getAllProducts(authorizationCode);
-        let productId = 0;
-
-        for (let i = 0; i < allProducts.length; i++) {
-            const product = allProducts[i];
-            if (removerAcentos(product.nome.toLowerCase()) === removerAcentos(productName.toLowerCase())) {
-                productId = product.id;
-                break;
+        let productId;
+        let nomeProduto = productName;
+        nomeProduto.removerAcentos();
+        nomeProduto.toLowerCase();
+        const response = await axiosInstanceCode.get(`produtos?nome=${nomeProduto}`, {
+            headers: {
+                'Authorization': `Bearer ${authorizationCode}`
             }
-        }
+        });
 
-        //console.log(`Total de produtos: ${allProducts.length}`);
+        productId = response.data.id
         return productId;
     } catch (error) {
-        console.error("Erro na solicitação:", error.response.data.error.fields[0]);
+        console.error("Erro na solicitação:", error.response.data.error);
         return null;
     }
 }
