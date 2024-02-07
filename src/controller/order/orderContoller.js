@@ -1,5 +1,5 @@
 import { Router } from "express";
-import fluxoEndToEnd from '../../fluxoEndToEnd.js'
+import fluxoCompleto from '../../fluxoCompleto.js'
 
 
 const server = Router();
@@ -13,7 +13,7 @@ server.post("/sendOrderSale", async (req, res, next) => {
             return res.status(400).json({ error: "Sending from the same system to itself is not allowed." });
         } else { 
             
-            const sucessOrderNumbers = await fluxoEndToEnd(authorizationCodeSYS01, authorizationCodeSYS02, numberSaleOrders);
+            const sucessOrderNumbers = await fluxoCompleto(authorizationCodeSYS01, authorizationCodeSYS02, numberSaleOrders);
             res.send({
                 data: sucessOrderNumbers
             });

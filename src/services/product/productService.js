@@ -1,24 +1,21 @@
 import axiosInstanceCode from '../../connection/axios.js';
 import removerAcentos from '../common/functions.js';
 
-export async function getProductIdByName(productName) {
+export async function getProductIdByName(authorizationCode, productName) {
     // console.log("Acessando id do produto!");
 
     try {
         let productId;
-        let nomeProduto = productName;
-        nomeProduto.removerAcentos();
-        nomeProduto.toLowerCase();
-        const response = await axiosInstanceCode.get(`produtos?nome=${nomeProduto}`, {
+        const response = await axiosInstanceCode.get(`produtos?nome=${productName}`, {
             headers: {
                 'Authorization': `Bearer ${authorizationCode}`
             }
         });
 
-        productId = response.data.id
+        productId = response.data.data[0].id
         return productId;
     } catch (error) {
-        console.error("Erro na solicitação:", error.response.data.error);
+        console.error("Erro na solicitação:", error);
         return null;
     }
 }

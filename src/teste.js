@@ -1,13 +1,14 @@
 import { getAuthorizationCode } from './services/auth/authorizationService.js';
-import { getAllContacts, getContactId } from './services/contacts/contactService.js';
-import { getAllProducts, getProductId } from './services/product/productService.js';
+import { getContactId } from './services/contacts/contactService.js';
 import { getLastNumberOrder } from './services/order/getSalesOrderService.js';
-import { getSalespersonId, getSpecificSellerName } from './services/seller/sellerService.js'
+import { getSalespersonId, getSpecificSellerName, getSelledIdByName } from './services/seller/sellerService.js'
 import fluxoCompleto from './fluxoCompleto.js';
+
 // import { fluxoEndToEnd } from './fluxoEndToEnd.js'
         const authorizationCodeUniversal = "9465680fb013d17946594a83e81020c074d69f31";
         const authorization02 = "ca868b0da09d1e942e089114cb62d58b20859b7c";
-        await fluxoCompleto(authorizationCodeUniversal, authorization02, [2011, 2010])
+        // await getSelledIdByName(authorization02, "Marcelo Santana")
+        // await fluxoCompleto(authorizationCodeUniversal, authorization02, [1993, 1991])
         //await getSpecificSaleOrderByOrderNumber(authorizationCodeUniversal, 2011);
         // await getSalespersonId(authorizationCodeUniversal, "MIGUEL")
         // await getSpecificSellerName(authorizationCodeUniversal, "15596220514")
