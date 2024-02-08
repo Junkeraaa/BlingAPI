@@ -6,17 +6,22 @@ import { getProductIdByName } from './services/product/productService.js'
 import { AddSaleOrder } from './services/order/AddOrderService.js'
 
 
- async function fluxoCompleto(authorizationIdSYS1, authorizationIdSYS2, numberSaleOrder){
+ async function fluxoCompleto(authorizationIdSYS1, authorizationIdSYS2, numberSaleOrders){
 
         console.log("iniciando fluxo completo")
+        let responseObjects = [];
+
+        let lastNumberOrder = await getLastNumberOrder(authorizationIdSYS2) // Recebendo o numero do ultimo pedido adicionado no sistema destinatário.
+
+        for(let i = 0; i < numberSaleOrders.length; i++) {
 
         let responseObject = {}
-        responseObject.numeroAntigoDoPedido = numberSaleOrder; // passando no objeto o numero antigo do pedido.
-        let lastNumberOrder = await getLastNumberOrder(authorizationIdSYS2) // Recebendo o numero do ultimo pedido adicionado no sistema destinatário.
+        responseObject.numeroAntigoDoPedido = numberSaleOrders[i]; // passando no objeto o numero antigo do pedido.
+        
 
         try {
         
-        const idOrder = await getIdOfSpecificSaleOrderByOrderNumber(authorizationIdSYS1, numberSaleOrder) // Recebendo o id do pedido informado.
+        const idOrder = await getIdOfSpecificSaleOrderByOrderNumber(authorizationIdSYS1, numberSaleOrders[i]) // Recebendo o id do pedido informado.
         
         if(idOrder === 0){
             throw new Error("O número de pedido informado não existe");
@@ -52,12 +57,22 @@ import { AddSaleOrder } from './services/order/AddOrderService.js'
         responseObject.numeroNovoDoPedido = lastNumberOrder; // Adicionando no objeto resposta o novo número do pedido.
 
         const responseAddSaleOrder = await AddSaleOrder(authorizationIdSYS2, orderSale, lastNumberOrder); // Adicionando o pedido a conta 02
+
+        responseObject.status = responseAddSaleOrder
+
+        responseObjects.push(responseObject)
+        
     } catch (error){
 
         responseObject.Erro = error.message
-
+        responseObject.status = "Erro na aplicação"
+        responseObjects.push(responseObject)
     }
-        return responseObject
+
+}
+    
+        return responseObjects
+
 }
 
 export default fluxoCompleto

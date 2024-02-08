@@ -8,9 +8,6 @@
     "start": "nodemon src/index.js"
   },
   "type": "module",
-  "engines": {
-    "node": "18.x"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",

@@ -17,11 +17,12 @@ export async function AddSaleOrder(authorizationCode, orderToAdd, newNumberOrder
 
         console.log(`Pedido cadastrado com sucesso`);
         console.log(response.data.data.id)
-        return response.data.data.id;
-        // Faça algo com a resposta aqui
+        // Retorna "sucesso" em caso de sucesso
+        return "Sucesso";
     } catch (error) {
         console.error("Erro na solicitação:", error.response.data.error.fields[0]);
         
-        // Trate o erro aqui, se necessário
+        // Retorna "erro" em caso de falha
+        return "Erro no envio do pedido - tentar novamente";
     }
 }

@@ -9,12 +9,12 @@ server.get("/authorization", async (req, res) => {
     try {
         const { code, system } = req.query;
         if (!code) {
-            return res.status(400).json({ error: "Authorization code is required. Teste Luis" });
+            return res.status(400).json({ error: "Authorization code is required." });
         } else { 
             
             const authorizationCode = await getAuthorizationCode(code, system);
             res.writeHead(301, {
-                Location: `https://65c3ab55ef9f7b4c00851b09--resonant-zuccutto-706576.netlify.app/q?system=${system}&token=${authorizationCode}`
+                Location: `http://srv474737.hstgr.cloud:3000/q?system=${system}&token=${authorizationCode}`
               }).end();
         }
         res.send();
