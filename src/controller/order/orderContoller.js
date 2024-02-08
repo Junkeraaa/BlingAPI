@@ -16,7 +16,7 @@ server.post("/sendOrderSale", async (req, res, next) => {
             return res.status(400).json({ error: "Sending from the same system to itself is not allowed." });
         } else { 
             
-            const responseObject = await fluxoCompleto(authorizationCodeSYS01, authorizationCodeSYS02, numberSaleOrders);
+            const responseObject = await fluxoCompleto(authorizationCodeSYS01, authorizationCodeSYS02, treatedNumberSales);
             res.send({
                 data: responseObject
             });
