@@ -23,6 +23,11 @@ server.get("/authorization", async (req, res) => {
             err: err,
             msg: err.message
         });
+        
+        res.writeHead(301, {
+            Location: `http://srv474737.hstgr.cloud:3000/erro`
+        }).end();
+        
     }
 });
 
