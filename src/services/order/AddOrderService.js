@@ -23,6 +23,6 @@ export async function AddSaleOrder(authorizationCode, orderToAdd, newNumberOrder
         console.error("Erro na solicitação:", error.response.data.error.fields[0]);
         
         // Retorna "erro" em caso de falha
-        return "Erro no envio do pedido - tentar novamente";
+        return "Erro na aplicação";
     }
 }
